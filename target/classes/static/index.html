@@ -654,7 +654,7 @@
         htoken = Math.random().toString(36).slice(-8);
         $.ajax({
           type: 'post',
-          url: '/api/set_auth',
+          url: '/api/setauth',
           data: JSON.stringify({auth_by: in_pid , auth_params: params, auth_token: htoken}),
           contentType: "application/json; charset=utf-8",
           success: function (result) {

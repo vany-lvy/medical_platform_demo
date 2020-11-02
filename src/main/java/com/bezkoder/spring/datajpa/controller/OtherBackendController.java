@@ -142,6 +142,16 @@ public class OtherBackendController {
         return new ResponseEntity<String>("delete done", HttpStatus.ACCEPTED);
     }
 
+    @PostMapping(path = "/setauth")
+    public ResponseEntity<String> setauth(@RequestBody Map<String, String> in_var) {
+        String auth_by = in_var.get("auth_by");
+        String auth_token = in_var.get("auth_token");
+        String auth_records = in_var.get("auth_params");
+        String ps = "insert into auth_records(auth_by, auth_date, auth_token, auth_records) values(" + auth_by + ", now(), ?, ?)";
+        db_util.getQuery(ps,auth_token,auth_records);
+        return new ResponseEntity<String>("auth done", HttpStatus.ACCEPTED);
+    }
+
 
     @PostMapping(path = "/authorize")
     public ResponseEntity<String> authorize(@RequestBody Map<String, String> rights) {
