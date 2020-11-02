@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <style type="text/css">
+        tr.selected {background-color: #4e73df}
+    </style>
+</head>
+<body>
+<div class="form-row">
+    <p class="text-primary">These medical records access rights are granted by &nbsp</p><p class="text-danger">patient_1</p>
+    <p class="text-dark" id="granted_token"></p>
+</div>
+<hr>
+</div>
+<div class="table-area">
+    <div class="table-responsive">
+        <table class="table table-bordered" id="medicalTable" width="100%" cellspacing="0">
+            <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>Record Date</th>
+                <th>Record Content</th>
+                <th>Doctor Name</th>
+                <th>Hospital Name</th>
+                <th>Department Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+
+<!-- Page level custom scripts -->
+<!-- Page level plugins -->
+<script src="vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+<script>
+    var in_data = JSON.parse(localStorage.getItem("selected_records"));
+    $("#granted_token").text(", Granted token is "+ localStorage.getItem("htoken"));
+    $(function () {
+        //初始化dataTables对象
+        dataTable2 = $("#medicalTable").DataTable({
+            bFilter: true, //是否启动过滤、搜索功能
+            bLengthChange: false,//是否显示一个每页长度的选择条（需要分页器支持）
+            bSort: true,//是否启动各个字段的排序功能
+            bPaginate: false,//是否显示（应用）分页器
+            bInfo: false,//是否显示页脚信息，DataTables插件左下角显示记录数
+            stripeClasses: ["table-striped", "even"],// 为奇偶行加上样式，兼容不支持CSS伪类的场合
+            destroy: true,//解决Cannot reinitialise DataTable
+            data: in_data.arr,
+            columns:[
+                {data: "record_id"},
+                {data: "record_date"},
+                {data: "record_content"},
+                {data: "doctor_name"},
+                {data: "hospital_name"},
+                {data: "hospital_department"}
+            ]
+        });
+        $('#medicalTable tbody').on( 'click', 'tr', function () {
+            selected_row = $(this);
+            $(this).toggleClass('selected');
+        });
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>SB Admin 2 - Dashboard</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+  <!-- Custom styles for this page -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <style type="text/css">
+    tr.selected {background-color: #4e73df}
+  </style>
+  <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+  <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-laugh-wink"></i>
+      </div>
+      <div class="sidebar-brand-text mx-3"> Medical Records </div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+      <a class="nav-link" href="index.html">
+        <i class="fas fa-fw fa-tachometer-alt"></i>
+        <span>Records Panel</span></a>
+    </li>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+      Management Center
+    </div>
+<!--    <li class="nav-item active">-->
+<!--      <a class="nav-link" href="config.html">-->
+<!--        <i class="fas fa-fw fa-cog"></i>-->
+<!--        <span>Update Info</span></a>-->
+<!--    </li>-->
+<!--    <li class="nav-item active">-->
+<!--      <a class="nav-link" href="authorize.html">-->
+<!--        <i class="fas fa-fw fa-cog"></i>-->
+<!--        <span>Authorize</span></a>-->
+<!--    </li>-->
+
+    <!-- Nav Item - Pages Collapse Menu -->
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Topbar -->
+      <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+        <!-- Sidebar Toggle (Topbar) -->
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Topbar Search -->
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for any information you like..." aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="button">
+                <i class="fas fa-search fa-sm"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+
+          <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+          <li class="nav-item dropdown no-arrow d-sm-none">
+            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-search fa-fw"></i>
+            </a>
+            <!-- Dropdown - Messages -->
+            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+              <form class="form-inline mr-auto w-100 navbar-search">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                      <i class="fas fa-search fa-sm"></i>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </li>
+
+          <div class="topbar-divider d-none d-sm-block"></div>
+
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small" id="user_profile">User</span>
+              <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                Profile
+              </a>
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                Settings
+              </a>
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
+                Activity Log
+              </a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+
+        </ul>
+
+      </nav>
+      <!-- End of Topbar -->
+
+      <!-- Begin Page Content -->
+      <div id="main_content" class="container-fluid">
+
+        <!-- Page Heading -->
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+          <h1 class="h3 mb-0 text-gray-800">Records Center</h1>
+          <a id='export_report' class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Export Report </a>
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Basic Information</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="table-area">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="basicTable" width="100%" cellspacing="0">
+                      <thead>
+                      <tr>
+                        <th>Name</th>
+<!--                        <th>Telephone</th>-->
+                        <th>ID Card</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <input class="form-control" id="update_ipt" placeholder="New IDCard e.g. patient_1_idcard_new">
+                  </div>
+                  <div class="form-group col-4">
+                    <button class="form-control btn-warning" id="update_btn" >Update Personal Info</button>
+                  </div>
+                </div>
+              </div>
+
+              </div>
+            </div>
+          </div>
+
+        <!-- Area table -->
+        <div class="row">
+          <div class="col-xl-12 col-lg-12">
+            <div class="card shadow mb-4">
+              <!-- Card Header - Dropdown -->
+              <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Medical Records Panel</h6>
+                <div class="dropdown no-arrow">
+                  <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                    <div class="dropdown-header">Dropdown Header:</div>
+                    <a class="dropdown-item" href="#">Action</a>
+                    <a class="dropdown-item" href="#">Another action</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </div>
+                </div>
+              </div>
+              <!-- Card Body -->
+              <div class="card-body">
+                <div class="form-row">
+                  <div class="form-group col-md-2">
+                    <label for="hospital_filter">Hospital Filter</label>
+                    <select class="form-control" id="hospital_filter">
+                      <option>
+                        all_hospitals
+                      </option>
+                      <option>
+                        hospital_1
+                      </option>
+                      <option>
+                        hospital_2
+                      </option>
+                      <option>
+                        hospital_3
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="department_filter">Department Filter</label>
+                    <select class="form-control" id="department_filter">
+                      <option>
+                        all_departments
+                      </option>
+                      <option>
+                        department_1
+                      </option>
+                      <option>
+                        department_2
+                      </option>
+                      <option>
+                        department_3
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="department_filter">Doctor Filter</label>
+                    <select class="form-control" id="doctor_filter">
+                      <option>
+                        all_doctors
+                      </option>
+                      <option>
+                        doctor_1
+                      </option>
+                      <option>
+                        doctor_2
+                      </option>
+                      <option>
+                        doctor_3
+                      </option>
+                      <option>
+                        doctor_4
+                      </option>
+                      <option>
+                        doctor_5
+                      </option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-2">
+                    <label for="date_filter">Date Filter</label>
+                    <input class="form-control" type="text" name="daterange" id="date_filter" value="01/01/2020 - 12/30/2020" />
+                  </div>
+                  <div class="form-group col-2">
+                    <label for="search_btn">&nbsp</label>
+                    <button class="form-control btn-secondary" id="search_btn">
+                      Search Now!
+                    </button>
+                  </div>
+
+                </div>
+
+                <hr>
+                <div id="accordion2">
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="card-link" data-toggle="collapse" href="#collapseOne2">
+                        Retrieve records with a new Report_ID
+                      </a>
+                    </div>
+                    <div id="collapseOne2" class="collapse" data-parent="#accordion2">
+                      <div class="card-body row">
+                        <div class="input-group col-6">
+                          <input id="rpid" type="text" class="form-control" placeholder="New Inner Report ID" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <button id="rpid_btn" class="btn btn-secondary" type="button">Retrieve New Records via ID</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <hr>
+                <div class="table-area">
+                  <div class="table-responsive">
+                    <table class="table table-bordered" id="medicalTable" width="100%" cellspacing="0">
+                      <thead>
+                      <tr>
+                        <th>Record ID</th>
+                        <th>Record Date</th>
+                        <th>Record Content</th>
+                        <th>Doctor Name</th>
+                        <th>Hospital Name</th>
+                        <th>Department Name</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-row">
+                  <div class="form-group col-4">
+                    <button class="form-control btn-info" id="grant_btn">Grant Priviledges to Doctors</button>
+                  </div>
+                  <div class="form-group col-4">
+                    <button class="form-control btn-danger" id="delete_btn">Delete from Platform</button>
+                  </div>
+                </div>
+                <hr>
+                <div id="accordion">
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                        Show Statistic Charts
+                      </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                      <div class="card-body row">
+                        <div class="col-6">
+                          <div id="chart_container" style="min-width:200px;height:200px"></div>
+                        </div>
+                        <div class="col-6">
+                          <div id="chart_container2" style="min-width:200px;height:200px"></div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; Your Website 2020</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+
+      </div>
+      <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+    <!-- Page level custom scripts -->
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script>
+      //update user info.
+      var dataTable;
+      var arr = Array();
+      var in_var = JSON.parse(localStorage.getItem("input_data"));
+      var in_pid = localStorage.getItem("patient_id");
+      arr[0] = in_var;
+      $("#user_profile").text(in_var['patient_name']);
+      localStorage.removeItem("input_data");
+      $(function () {
+        //初始化dataTables对象
+        dataTable = $("#basicTable").DataTable({
+          bFilter: false, //是否启动过滤、搜索功能
+          bLengthChange: false,//是否显示一个每页长度的选择条（需要分页器支持）
+          bSort: false,//是否启动各个字段的排序功能
+          bPaginate: false,//是否显示（应用）分页器
+          bInfo: false,//是否显示页脚信息，DataTables插件左下角显示记录数
+          stripeClasses: ["table-striped", "even"],// 为奇偶行加上样式，兼容不支持CSS伪类的场合
+          destroy: true,//解决Cannot reinitialise DataTable
+          data: arr,
+          columns:[
+            {data: "patient_name"},
+            //{data: "patient_telephone"},
+            {data: "patient_idcard"}
+          ]
+        });
+      })
+    </script>
+
+    <script>
+      $(function() {
+        $('input[name="daterange"]').daterangepicker({
+          opens: 'left'
+        }, function(start, end, label) {
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+      });
+    </script>
+    <script>
+      var filter_data;
+      var dataTable2;
+      var selected_row;
+      var get_data;
+      var countedNames;
+      var countedNames2;
+      $("#search_btn").click(function(){
+        filter_data = JSON.stringify({patient_id: localStorage.getItem("patient_id"),hospital_filter: $("#hospital_filter").val(), department_filter:$("#department_filter").val(), doctor_filter:$("#doctor_filter").val(), date_filter:$("#date_filter").val()});
+          $.ajax({
+            type: 'post',
+            url: '/api/filtereddata',
+            data: filter_data,
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+              $(function () {
+                get_data = JSON.parse(result);
+                //初始化dataTables对象
+                dataTable2 = $("#medicalTable").DataTable({
+                  bFilter: true, //是否启动过滤、搜索功能
+                  bLengthChange: false,//是否显示一个每页长度的选择条（需要分页器支持）
+                  bSort: true,//是否启动各个字段的排序功能
+                  bPaginate: false,//是否显示（应用）分页器
+                  bInfo: false,//是否显示页脚信息，DataTables插件左下角显示记录数
+                  stripeClasses: ["table-striped", "even"],// 为奇偶行加上样式，兼容不支持CSS伪类的场合
+                  destroy: true,//解决Cannot reinitialise DataTable
+                  data: JSON.parse(result),
+                  columns:[
+                    {data: "record_id"},
+                    {data: "record_date"},
+                    {data: "record_content"},
+                    {data: "doctor_name"},
+                    {data: "hospital_name"},
+                    {data: "hospital_department"}
+                  ]
+                });
+                $('#medicalTable tbody').on( 'click', 'tr', function () {
+                  selected_row = $(this);
+                  $(this).toggleClass('selected');
+                });
+                var chart_data = new Array();
+                countedNames = get_data.map(obj => {return obj.hospital_department}).reduce(function (allNames, name) { if (name in allNames) { allNames[name]++; } else { allNames[name] = 1; } return allNames; }, {});
+                for(var key in countedNames){chart_data.push({name:String(key),y:countedNames[key]})};
+                Highcharts.chart('chart_container', {
+                  chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                  },
+                  title: {
+                    text: 'Departments Aggregation'
+                  },
+                  tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                  },
+                  plotOptions: {
+                    pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                      }
+                    }
+                  },
+                  series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: chart_data
+                  }]
+                });
+
+                var chart_data2 = new Array();
+                countedNames2 = get_data.map(obj => {return obj.doctor_name}).reduce(function (allNames, name) { if (name in allNames) { allNames[name]++; } else { allNames[name] = 1; } return allNames; }, {});
+                for(var key in countedNames2){chart_data2.push({name:String(key),y:countedNames2[key]})};
+                Highcharts.chart('chart_container2', {
+                  chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                  },
+                  title: {
+                    text: 'Doctors Aggregation'
+                  },
+                  tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                  },
+                  plotOptions: {
+                    pie: {
+                      allowPointSelect: true,
+                      cursor: 'pointer',
+                      dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                      }
+                    }
+                  },
+                  series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: chart_data2
+                  }]
+                });
+              })
+            }
+          });
+      })
+    </script>
+    <script>
+      var select_arr;
+      var id_arr;
+      var params;
+      var htoken;
+      var token = 0;
+      $("#grant_btn").click(function(){
+        token += 1;
+        if(token > 5){
+          alert("too much times, abuse detection system start... please try again later");
+          return;
+        }
+        select_arr = dataTable2.rows('.selected').data();
+        id_arr = select_arr.map(obj => {return obj.record_id});
+        params = id_arr.join(',');
+        htoken = Math.random().toString(36).slice(-8);
+        $.ajax({
+          type: 'post',
+          url: '/api/set_auth',
+          data: JSON.stringify({auth_by: localStorage.getItem("patient_id") , auth_params: params, auth_token: htoken}),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            localStorage.setItem("auth", JSON.stringify({auth_by: in_pid , auth_params: params}));
+            localStorage.setItem("selected_records", JSON.stringify({arr: select_arr}));
+            localStorage.setItem("htoken", htoken);
+          }
+        });
+        localStorage.removeItem("patient_id")
+        window.open("qrcode.html","_blank");
+      })
+    </script>
+    <script>
+      setTimeout($('#rpid_btn').on( 'click', function () {
+        $.ajax({
+          type: 'post',
+          url: '/api/insert',
+          data: JSON.stringify({
+              patient_id: in_pid,
+              record_id: $("#rpid").val(),
+              record_date: '2020-10-03',
+              record_content: 'record contents - (new added)',
+              doctor_name: 'doctor_1 (new added)',
+              hospital_name: 'hospital_1 (new added)',
+              hospital_department: 'department_1 - (new added)'
+          }),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            dataTable2.row.add({
+              record_id: $("#rpid").val(),
+              record_date: '2020-10-03',
+              record_content: 'record contents - (new added)',
+              doctor_name: 'doctor_1 (new added)',
+              hospital_name: 'hospital_1 (new added)',
+              hospital_department: 'department_1 - (new added)'
+            }).draw( false );
+          }
+        });
+      } )
+      ,3000);
+
+      // Automatically add a first row of data
+    </script>
+    <script>
+      $('#update_btn').on( 'click', function () {
+
+        $.ajax({
+          type: 'post',
+          url: '/api/updateinfo',
+          data: JSON.stringify({patient_idcard: in_var.patient_idcard, patient_idcard_new: $("#update_ipt").val()}),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            dataTable.clear().draw(false);
+            dataTable.row.add({patient_name: in_var.patient_name, patient_idcard: $("#update_ipt").val()}).draw(false);
+          }
+        });
+      } )
+      $('#delete_btn').on( 'click', function () {
+        $.ajax({
+          type: 'post',
+          url: '/api/deleteinfo',
+          data: JSON.stringify({record_id: dataTable2.row('.selected').data().record_id}),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            dataTable2.row('.selected').remove().draw( false );
+          }
+        });
+
+      } )
+    </script>
+
+<!--    <script>-->
+<!--      function updateInfo(id,newone) {-->
+<!--        oldone = $("#"+id).text();-->
+<!--        $("#"+id).text(oldone + " " + newone);-->
+<!--      }-->
+<!--    </script>-->
+<!--    <script>-->
+<!--      $("#export_report").on('click',function(){-->
+<!--        window.print();-->
+<!--        $(".action-button").click();-->
+<!--      })-->
+
+
+<!--      var dataTable;-->
+<!--      var record = JSON.parse(localStorage.getItem("record"));-->
+<!--      updateInfo("patient_name", record[0].patient_name);-->
+<!--      updateInfo("patient_age", record[0].patient_age);-->
+<!--      updateInfo("patient_telephone", record[0].patient_telphone);-->
+<!--      updateInfo("patient_idcard", record[0].patient_idcard);-->
+<!--      updateInfo("patient_address", record[0].patient_address);-->
+<!--      updateInfo("patient_gender", record[0].patient_gender);-->
+<!--      localStorage.setItem("patient_tel",record[0].patient_telphone);-->
+
+
+</div>
+</div>
+
+
+<!--    </script>-->
+
+</body>
+
+</html>

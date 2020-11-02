@@ -1,0 +1,80 @@
+-- Database: health_platform
+
+-- DROP DATABASE health_platform;
+
+CREATE DATABASE health_platform
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'C'
+    LC_CTYPE = 'C'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = 5;
+
+
+-- Table: public.patient_info
+
+-- DROP TABLE public.patient_info;
+
+CREATE TABLE public.patient_info
+(
+    patient_id bigint NOT NULL,
+    patient_name character varying(20) COLLATE pg_catalog."default",
+    patient_age integer,
+    patient_gender character varying(10) COLLATE pg_catalog."default",
+    patient_idcard character varying(20) COLLATE pg_catalog."default",
+    patient_telephone character varying(20) COLLATE pg_catalog."default",
+    patient_htoken character varying(256) COLLATE pg_catalog."default",
+    patient_salt1 character varying(20) COLLATE pg_catalog."default",
+    patient_salt2 character varying(20) COLLATE pg_catalog."default",
+    CONSTRAINT patient_info_pkey PRIMARY KEY (patient_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.patient_info
+    OWNER to postgres;
+
+
+-- Table: public.health_records
+
+-- DROP TABLE public.health_records;
+
+CREATE TABLE public.health_records
+(
+    record_id character varying(100) COLLATE pg_catalog."default" NOT NULL,
+    record_date date,
+    record_content character varying(100) COLLATE pg_catalog."default",
+    patient_id bigint,
+    doctor_name character varying(200) COLLATE pg_catalog."default",
+    hospital_name character varying(200) COLLATE pg_catalog."default",
+    hospital_department character varying(200) COLLATE pg_catalog."default",
+    CONSTRAINT health_records_pkey PRIMARY KEY (record_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.health_records
+    OWNER to postgres;
+
+
+-- Table: public.auth_records
+
+-- DROP TABLE public.auth_records;
+
+CREATE TABLE public.auth_records
+(
+    auth_id bigint NOT NULL DEFAULT nextval('auth_id_seq'::regclass),
+    auth_date date,
+    auth_by bigint,
+    auth_token character varying(20) COLLATE pg_catalog."default",
+    auth_field character varying(100) COLLATE pg_catalog."default",
+    auth_records character varying(1000) COLLATE pg_catalog."default",
+    auth_type integer,
+    CONSTRAINT auth_records_pkey PRIMARY KEY (auth_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.auth_records
+    OWNER to postgres;

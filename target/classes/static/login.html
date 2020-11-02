@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Medical Records Integration Platform</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+  <!-- Custom styles for this template-->
+  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body class="bg-gradient-primary" id="all_container">
+<div class="container">
+  <p id="alert_message"></p>
+  <!-- Outer Row -->
+  <div class="row justify-content-center">
+
+    <div class="col-xl-10 col-lg-12 col-md-9">
+
+      <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+          <!-- Nested Row within Card Body -->
+          <div class="row">
+            <div class="col-lg-6"><img width="100%" height="100%" src="img/11.jpg"></div>
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="text-center">
+                  <h1 class="h4 text-gray-900 mb-4">Medical Records One-Stop Integration Platform</h1>
+                </div>
+                <form class="user">
+                  <p class="text-warning">in this version, only patients can access their data through this page... </p>
+                  <div id="patient_entrance">
+                    <div class="form-group row">
+                      <label class="col-4">Name:</label>
+                      <input type="text" class="form-control col-8 userinput-field" id="patient_name" placeholder="Please enter your name used in hospital...">
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-4">Telephone:</label>
+                      <input type="tel" class="form-control col-8 userinput-field" id="patient_telephone" placeholder="Please enter your telephone used in hospital...">
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-4">ID Card:</label>
+                      <input type="text" class="form-control col-8 userinput-field" id="patient_idcard" placeholder="Please enter your idcard used in hospital...">
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-4">PIN Code:</label>
+                      <input type="password" class="form-control col-8 userinput-field" id="patient_token" placeholder="Please enter your personal token used in our platform...">
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-4">Verification Code:</label>
+                      <input type="text" class="form-control col-4 userinput-field" id="patient_verifycode"placeholder="Please enter the Verification Code">
+                      <div class="col-1"></div>
+                      <button class="btn btn-outline-secondary form-control col-3" id="send_verify_btn" type="button">Send</button>
+                    </div>
+
+
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label>
+                      </div>
+                    </div>
+                  </div>
+                  <br>
+                  <a id="inputlogin" class="btn btn-primary btn-block">
+                    Search Your Medical Records!!!
+                  </a>
+                  </br>
+               </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+
+<script>
+  function checkInputParam() {
+    var result=true;
+    $(".userinput-field").each(function(){
+      if($(this).val() == ''){
+        result=false;
+      }
+    });
+    return result;
+  }
+  function checkTelephone() {
+    if($("#patient_telephone").val() == ''){
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
+<script>
+  var vcode;
+  var nonce;
+  $("#send_verify_btn").click(function(){
+    if(!checkTelephone()){
+      alert("Please enter a valid telephone number");
+    } else {
+      $.ajax({
+        type: 'post',
+        url: '/api/sendnonce',
+        data: JSON.stringify({patient_name: $("#patient_name").val(), patient_idcard: $("#patient_idcard").val()}),
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+          var hash = md5(result+$("#patient_telephone"));
+          $.ajax({
+            type: 'post',
+            url: '/api/sendcode',
+            data: JSON.stringify({patient_telephone: hash}),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+              vcode = result;
+            }
+          });
+        }
+      });
+    }
+  })
+</script>
+
+<script>
+  var input_data;
+  $("#inputlogin").click(function () {
+    if(!checkInputParam()){
+      alert("please check your input field");
+      return;
+    }
+    if(($("#patient_verifycode").val() == vcode)){
+
+    } else {
+      input_data = JSON.stringify({
+        patient_name: $("#patient_name").val(),
+        patient_idcard: $("#patient_idcard").val(),
+        patient_token: $("#patient_token").val()
+      });
+      var id;
+      $.ajax({
+        type: 'post',
+        url: '/api/login',
+        data: input_data,
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+          id = result;
+          console.log(id);
+          if(id == ""){
+            alert("user does not exist");
+          } else {
+            localStorage.setItem("patient_id", id);
+            localStorage.setItem("input_data", input_data);
+            window.location.href = 'index.html';
+          }
+
+          // if ($("#input_role").val() == "Doctor") {
+          //   localStorage.setItem("record", result);
+          //   localStorage.setItem("patient_tel", $("#input_tel").val());
+          //   window.location.href = 'index2.html';
+          // } else {
+          //   localStorage.setItem("record", result);
+          //   localStorage.setItem("patient_tel", $("#input_tel").val());
+          //   window.location.href = 'index.html';
+          // }
+        }, error: function (e) {//响应不成功时返回的函数
+          console.log(e, 'error')
+        }
+      });
+    }
+  });
+
+</script>
+
+</body>
+
+</html>

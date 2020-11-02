@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<center>
+    <p class="form-control">Please scan this QRCode to get the report</p>
+    <hr>
+    <div id="qrcode"></div>
+    <hr>
+    <p>If the QRCode is crashed, please click this link ... </p>
+    <a id="link" href="">Click me!!!</a>
+</center>
+
+<script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+<script type="text/javascript" src="http://cdn.staticfile.org/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+<script type="text/javascript">
+    var x = localStorage.getItem("auth");
+    var y = localStorage.getItem("selected_records");
+    jQuery('#qrcode').qrcode("authed_records.html?"+localStorage.getItem("htoken"));
+    var s = "authed_records.html?"+localStorage.getItem("htoken");
+    $("#link").attr("href",s);
+</script>
+</body>
+</html>
