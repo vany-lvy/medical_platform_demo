@@ -215,14 +215,34 @@
                   </div>
                 </div>
                 <hr>
-                <div class="form-row">
-                  <div class="form-group col-4">
-                    <input class="form-control" id="update_ipt" placeholder="New IDCard e.g. patient_1_idcard_new">
-                  </div>
-                  <div class="form-group col-4">
-                    <button class="form-control btn-warning" id="update_btn" >Update Personal Info</button>
+                <hr>
+                <div id="accordion3">
+                  <div class="card">
+                    <div class="card-header">
+                      <a class="card-link" data-toggle="collapse" href="#collapseOne3">
+                        Update Your Information
+                      </a>
+                    </div>
+                    <div id="collapseOne3" class="collapse" data-parent="#accordion3">
+                      <div class="card-body row">
+                        <div class="input-group col-6">
+                          <input id="update_ipt" type="text" class="form-control" placeholder="New ID Card" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <button id="update_btn" class="btn btn-warning" type="button">Update ID Card</button>
+                          </div>
+                        </div>
+                        <div class="input-group col-6">
+                          <input id="update_ipt2" type="text" class="form-control" placeholder="New PIN Code, 4 digits" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                          <div class="input-group-append">
+                            <button id="update_btn2" class="btn btn-warning" type="button">Update PIN Code</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                <hr>
               </div>
 
               </div>
@@ -333,6 +353,7 @@
                     <div id="collapseOne2" class="collapse" data-parent="#accordion2">
                       <div class="card-body row">
                         <div class="input-group col-6">
+                          <input id="telephone" type="text" class="form-control" placeholder="Telephone Number" aria-label="Recipient's username" aria-describedby="basic-addon2">
                           <input id="rpid" type="text" class="form-control" placeholder="New Inner Report ID" aria-label="Recipient's username" aria-describedby="basic-addon2">
                           <div class="input-group-append">
                             <button id="rpid_btn" class="btn btn-secondary" type="button">Retrieve New Records via ID</button>
@@ -634,7 +655,7 @@
         $.ajax({
           type: 'post',
           url: '/api/set_auth',
-          data: JSON.stringify({auth_by: localStorage.getItem("patient_id") , auth_params: params, auth_token: htoken}),
+          data: JSON.stringify({auth_by: in_pid , auth_params: params, auth_token: htoken}),
           contentType: "application/json; charset=utf-8",
           success: function (result) {
             localStorage.setItem("auth", JSON.stringify({auth_by: in_pid , auth_params: params}));
@@ -646,33 +667,30 @@
         window.open("qrcode.html","_blank");
       })
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
     <script>
       setTimeout($('#rpid_btn').on( 'click', function () {
-        $.ajax({
-          type: 'post',
-          url: '/api/insert',
-          data: JSON.stringify({
-              patient_id: in_pid,
-              record_id: $("#rpid").val(),
-              record_date: '2020-10-03',
-              record_content: 'record contents - (new added)',
-              doctor_name: 'doctor_1 (new added)',
-              hospital_name: 'hospital_1 (new added)',
-              hospital_department: 'department_1 - (new added)'
-          }),
-          contentType: "application/json; charset=utf-8",
-          success: function (result) {
-            dataTable2.row.add({
-              record_id: $("#rpid").val(),
-              record_date: '2020-10-03',
-              record_content: 'record contents - (new added)',
-              doctor_name: 'doctor_1 (new added)',
-              hospital_name: 'hospital_1 (new added)',
-              hospital_department: 'department_1 - (new added)'
-            }).draw( false );
-          }
-        });
-      } )
+
+      $.ajax({
+        type: 'post',
+        url: '/api/sendnonce',
+        data: JSON.stringify({patient_name: dataTable.data()[0].patient_name, patient_idcard: dataTable.data()[0].patient_idcard}),
+        contentType: "application/json; charset=utf-8",
+        success: function (result) {
+          result = JSON.parse(result);
+          var total_hash = md5(result.nonce+md5(result.salt+$("#telephone").val()+$("#rpid").val()));
+          console.log(total_hash);
+          $.ajax({
+            type: 'post',
+            url: '/api/insert',
+            data: JSON.stringify({request: total_hash}),
+            contentType: "application/json; charset=utf-8",
+            success: function (result) {
+              dataTable2.row.add(JSON.parse(result)[0]).draw( false );
+            }
+          });
+        }
+        })})
       ,3000);
 
       // Automatically add a first row of data
@@ -683,11 +701,23 @@
         $.ajax({
           type: 'post',
           url: '/api/updateinfo',
-          data: JSON.stringify({patient_idcard: in_var.patient_idcard, patient_idcard_new: $("#update_ipt").val()}),
+          data: JSON.stringify({patient_idcard: dataTable.data()[0].patient_idcard, patient_idcard_new: $("#update_ipt").val()}),
           contentType: "application/json; charset=utf-8",
           success: function (result) {
             dataTable.clear().draw(false);
             dataTable.row.add({patient_name: in_var.patient_name, patient_idcard: $("#update_ipt").val()}).draw(false);
+          }
+        });
+      } )
+      $('#update_btn2').on( 'click', function () {
+
+        $.ajax({
+          type: 'post',
+          url: '/api/updatepin',
+          data: JSON.stringify({patient_idcard: in_var.patient_idcard, pin_code: $("#update_ipt2").val()}),
+          contentType: "application/json; charset=utf-8",
+          success: function (result) {
+            alert("your pin code has been updated");
           }
         });
       } )

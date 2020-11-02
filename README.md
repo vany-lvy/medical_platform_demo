@@ -17,7 +17,7 @@ All projects can be divided into three parts, mainly,
 
      **p.s.** Almost all packages used are attached in the project, this is probably used for re-development, *If you just want to use this demo, ignore it*.
 
-   - Make you are connected to the internet to use several **cdn** js packages
+   - Make u are connected to the internet to use several **cdn** js packages
 
 3. Database (sql.txt)
 

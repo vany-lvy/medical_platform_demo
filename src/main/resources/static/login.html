@@ -66,6 +66,7 @@
                       <div class="col-1"></div>
                       <button class="btn btn-outline-secondary form-control col-3" id="send_verify_btn" type="button">Send</button>
                     </div>
+                    <p id="hint" class="alert-danger"></p>
 
 
                     <div class="form-group">
@@ -125,7 +126,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.10.0/js/md5.min.js"></script>
 <script>
   var vcode;
-  var nonce;
+  var res;
+  var tele_hash;
   $("#send_verify_btn").click(function(){
     if(!checkTelephone()){
       alert("Please enter a valid telephone number");
@@ -136,14 +138,16 @@
         data: JSON.stringify({patient_name: $("#patient_name").val(), patient_idcard: $("#patient_idcard").val(), token:$("#patient_token").val()}),
         contentType: "application/json; charset=utf-8",
         success: function (result) {
-          var hash = md5(result+$("#patient_telephone"));
+          res = result;
+          tele_hash = md5(res.nonce+md5(res.salt+$("#patient_telephone")));
           $.ajax({
             type: 'post',
             url: '/api/sendcode',
-            data: JSON.stringify({patient_telephone: hash}),
+            data: JSON.stringify({patient_telephone: tele_hash}),
             contentType: "application/json; charset=utf-8",
             success: function (result) {
               vcode = result;
+              $("#hint").text("verification code is " + vcode);
             }
           });
         }
@@ -159,8 +163,8 @@
       alert("please check your input field");
       return;
     }
-    if(($("#patient_verifycode").val() == vcode)){
-
+    if(!($("#patient_verifycode").val() == vcode)){
+      alert("wrong verification code")
     } else {
       input_data = JSON.stringify({
         patient_name: $("#patient_name").val(),
