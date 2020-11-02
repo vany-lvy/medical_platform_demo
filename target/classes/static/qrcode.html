@@ -19,7 +19,7 @@
 <script type="text/javascript">
     var x = localStorage.getItem("auth");
     var y = localStorage.getItem("selected_records");
-    jQuery('#qrcode').qrcode("authed_records.html");
+    jQuery('#qrcode').qrcode("authed_records.html?"+localStorage.getItem("htoken"));
     var s = "authed_records.html?"+localStorage.getItem("htoken");
     $("#link").attr("href",s);
 </script>

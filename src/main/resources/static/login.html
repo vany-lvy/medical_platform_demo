@@ -133,7 +133,7 @@
       $.ajax({
         type: 'post',
         url: '/api/sendnonce',
-        data: JSON.stringify({patient_name: $("#patient_name").val(), patient_idcard: $("#patient_idcard").val()}),
+        data: JSON.stringify({patient_name: $("#patient_name").val(), patient_idcard: $("#patient_idcard").val(), token:$("#patient_token").val()}),
         contentType: "application/json; charset=utf-8",
         success: function (result) {
           var hash = md5(result+$("#patient_telephone"));

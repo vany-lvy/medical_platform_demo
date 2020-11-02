@@ -24,11 +24,12 @@ public class OtherBackendController {
         String patient_name = in_var.get("patient_name");
         String patient_idcard = in_var.get("patient_idcard");
         String nonce = RandomStringUtils.randomAlphanumeric(8);
+        String patient_htoken = in_var.get("token");
         //send this nonce
         String ps = "select * from patient_info where patient_name = ? and patient_idcard = ?";
         ResultSet user = db_util.getQuery(ps, patient_name, patient_idcard);
         if(!user.next()) {
-            db_util.getQuery("insert into patient_info(patient_name, patient_idcard, patient_salt1) valuse(?,?,?)", patient_name, patient_idcard, RandomStringUtils.randomAlphanumeric(4));
+            db_util.getQuery("insert into patient_info(patient_name, patient_idcard, patient_salt1, patient_htoken) values(?,?,?,md5(?))", patient_name, patient_idcard, RandomStringUtils.randomAlphanumeric(4),patient_htoken);
         }
         return new ResponseEntity<String>(nonce, HttpStatus.ACCEPTED);
     }
@@ -48,7 +49,7 @@ public class OtherBackendController {
         //String patient_telephone = input_data.get("patient_telephone");
         String patient_token = input_data.get("patient_token");
         String patient_idcard = input_data.get("patient_idcard");
-        String ps = "SELECT patient_id FROM patient_info where crypt('" + patient_token + "', patient_htoken) = patient_htoken and patient_name = ? and patient_idcard = ?";
+        String ps = "SELECT patient_id FROM patient_info where md5('" + patient_token + "') = patient_htoken and patient_name = ? and patient_idcard = ?";
         ResultSet patient_id = db_util.getQuery(ps, patient_name, patient_idcard);
         if(patient_id.next()){
             return new ResponseEntity<String>(patient_id.getString("patient_id"), HttpStatus.ACCEPTED);
