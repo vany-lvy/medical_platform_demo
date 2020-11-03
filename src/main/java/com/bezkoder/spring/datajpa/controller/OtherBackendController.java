@@ -72,18 +72,18 @@ public class OtherBackendController {
     @PostMapping(path = "/insert")
     public ResponseEntity<String> insert(@RequestBody Map<String, String> input_data) throws SQLException, JSONException {
         String total_hash = input_data.get("request");
+        String patient_id = input_data.get("patient_id");
         // this should be modified if you use it
         // you should implement the logic that fetch data from hospital extranet
         if(true){
-            String patient_id = "1";
-            String record_id = "test";
+            String record_id = total_hash;
             String record_date = "10/10/2020";
             String record_content = "test";
             String doctor_name = "test";
             String hospital_name = "test";
             String hospital_department = "test";
             String ps = "insert into health_records values(?, now(), ?, '"+patient_id+ "', ?,?,?)";
-            ResultSet rs = db_util.getQuery(ps, record_id, record_content, doctor_name, hospital_name, hospital_department);
+            db_util.getQuery(ps, record_id, record_content, doctor_name, hospital_name, hospital_department);
             String res_str = db_util.resultSetToJson(db_util.getQuery("select * from health_records where record_id = ?", record_id));
             return new ResponseEntity<String>(res_str, HttpStatus.ACCEPTED);
         } else {

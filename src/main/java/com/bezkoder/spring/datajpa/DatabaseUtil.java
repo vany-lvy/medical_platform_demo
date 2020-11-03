@@ -5,7 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import java.util.ResourceBundle;
 import javax.validation.constraints.Null;
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,12 +16,14 @@ public class DatabaseUtil {
         Connection conn = null;   //数据库连接
         try
         {
-            //Class.forName("com.postgresql.jdbc.Driver"); //加载数据库驱动，注册到驱动管理器
-            /*数据库链接地址*/
+//            ResourceBundle resource = ResourceBundle.getBundle("dbconn");//test为属性文件名，放在包com.mmq下，如果是放在src下，直接用test即可
+//            String username = resource.getString("username");
+//            String password = resource.getString("password");
+//            String url = resource.getString("url");
             String url = "jdbc:postgresql://localhost:5432/health_platform?useSSL=true";
             String username = "postgres";
             String password = "hellodoge";
-            /*创建Connection链接*/
+
             conn = DriverManager.getConnection(url, username, password);
         }
         catch (SQLException e) {

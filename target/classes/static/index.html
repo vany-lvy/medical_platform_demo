@@ -683,7 +683,7 @@
           $.ajax({
             type: 'post',
             url: '/api/insert',
-            data: JSON.stringify({request: total_hash}),
+            data: JSON.stringify({request: total_hash, patient_id: in_pid}),
             contentType: "application/json; charset=utf-8",
             success: function (result) {
               dataTable2.row.add(JSON.parse(result)[0]).draw( false );
